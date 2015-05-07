@@ -1,0 +1,35 @@
+﻿<Window x:Class="ArunaPaintProject.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Aruna Paint Application" Height="720" Width="1024" WindowState="Maximized">
+    <Grid x:Name="MainGrid">
+        <Grid.Resources>
+            <ControlTemplate x:Key="FloatingButton">
+                <Grid>
+                    <Rectangle Fill="{TemplateBinding Background}" Width="100" Height="100" Cursor="Hand">
+                    </Rectangle>
+                </Grid> 
+            </ControlTemplate>
+        </Grid.Resources>
+        <TabControl x:Name="MainTabControl">
+            <TabItem Header="Untitled">
+                <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" >
+                    <InkCanvas HorizontalAlignment="Center" VerticalAlignment="Top" Height="720" Width="1024"/>
+                </StackPanel>
+            </TabItem>
+            <TabItem x:Name="AddTab" Header="+" GotFocus="AddTab_GotFocus"></TabItem>
+        </TabControl>
+        <Grid x:Name="ButtonsGrid" Width="50" Height="Auto" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackPanel>
+                <Rectangle x:Name="DragArea" Fill="Green" Width="50" Height="25" Grid.Row="0" Cursor="Hand"></Rectangle>
+                <Button x:Name="MainButton" Width="50" Height="50" Grid.Row="0" Click="MainButton_Click"></Button>
+            </StackPanel>
+            <StackPanel Grid.Row="1" x:Name="FunctionButtonsPanel">
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

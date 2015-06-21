@@ -13,3 +13,18 @@ E:\Aruna Paint\ArunaPaintProject\ArunaPaintProject\obj\Debug\ArunaPaintProject.c
 E:\Aruna Paint\ArunaPaintProject\ArunaPaintProject\obj\Debug\ArunaPaintProject.exe
 E:\Aruna Paint\ArunaPaintProject\ArunaPaintProject\obj\Debug\ArunaPaintProject.pdb
 E:\Aruna Paint\ArunaPaintProject\ArunaPaintProject\obj\Debug\ArunaPaintProject.csprojResolveAssemblyReference.cache
+C:\Sources\ArunaPaintProject\ArunaPaintProject\bin\Debug\ArunaPaintProject.exe.config
+C:\Sources\ArunaPaintProject\ArunaPaintProject\bin\Debug\ArunaPaintProject.exe
+C:\Sources\ArunaPaintProject\ArunaPaintProject\bin\Debug\ArunaPaintProject.pdb
+C:\Sources\ArunaPaintProject\ArunaPaintProject\bin\Debug\Dragablz.dll
+C:\Sources\ArunaPaintProject\ArunaPaintProject\bin\Debug\Dragablz.pdb
+C:\Sources\ArunaPaintProject\ArunaPaintProject\obj\Debug\ArunaPaintProject.csprojResolveAssemblyReference.cache
+C:\Sources\ArunaPaintProject\ArunaPaintProject\obj\Debug\MainWindow.baml
+C:\Sources\ArunaPaintProject\ArunaPaintProject\obj\Debug\MainWindow.g.cs
+C:\Sources\ArunaPaintProject\ArunaPaintProject\obj\Debug\App.g.cs
+C:\Sources\ArunaPaintProject\ArunaPaintProject\obj\Debug\ArunaPaintProject_MarkupCompile.cache
+C:\Sources\ArunaPaintProject\ArunaPaintProject\obj\Debug\ArunaPaintProject.g.resources
+C:\Sources\ArunaPaintProject\ArunaPaintProject\obj\Debug\ArunaPaintProject.Properties.Resources.resources
+C:\Sources\ArunaPaintProject\ArunaPaintProject\obj\Debug\ArunaPaintProject.csproj.GenerateResource.Cache
+C:\Sources\ArunaPaintProject\ArunaPaintProject\obj\Debug\ArunaPaintProject.exe
+C:\Sources\ArunaPaintProject\ArunaPaintProject\obj\Debug\ArunaPaintProject.pdb

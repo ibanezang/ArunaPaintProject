@@ -21,6 +21,7 @@ namespace ArunaPaintProject
     public partial class MainWindow : Window
     {
         List<Button> functionButtons;
+        TabItem activeTabItem = null;
         bool isShown;
 
         public MainWindow()
@@ -37,6 +38,21 @@ namespace ArunaPaintProject
             {
                 b.Visibility = System.Windows.Visibility.Collapsed;
                 FunctionButtonsPanel.Children.Add(b);
+            }
+
+            updateActiveTabItem();
+        }
+
+        private void updateActiveTabItem()
+        {
+            var items = FindVisualChildren<TabItem>(MainTabControl);
+            foreach (var item in items)
+            {
+                if (item.IsSelected)
+                {
+                    activeTabItem = item;
+                    break;
+                }
             }
         }
 
@@ -70,10 +86,80 @@ namespace ArunaPaintProject
         public Button createButton(Color color)
         {
             Button newButton = new Button();
-            //newButton.Template = MainGrid.FindResource("FloatingButton") as ControlTemplate;
             newButton.Width = 50;
             newButton.Height = 50;
             return newButton;
+        }
+
+        public Button createUndoButton()
+        {
+            Button button = new Button();
+            button.Content = "Undo";
+            button.Width = 50;
+            button.Height = 50;
+            button.Click += undo;
+            return button;
+        }
+
+        public Button createRedoButton()
+        {
+            Button button = new Button();
+            button.Content = "Redo";
+            button.Width = 50;
+            button.Height = 50;
+            button.Click += redo;
+            return button;
+        }
+
+        private void undo(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void redo(object sender, RoutedEventArgs e)
+        {
+
+        }
+                
+        private void MainButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (isShown)
+            {
+                foreach (Button b in functionButtons)
+                {
+                    b.Visibility = System.Windows.Visibility.Collapsed;
+                }
+                isShown = false;
+            }
+            else
+            {
+                foreach (Button b in functionButtons)
+                {
+                    b.Visibility = System.Windows.Visibility.Visible;
+                }
+                isShown = true;
+            }
+            
+        }
+
+        public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
+        {
+            if (depObj != null)
+            {
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+                {
+                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
+                    if (child != null && child is T)
+                    {
+                        yield return (T)child;
+                    }
+
+                    foreach (T childOfChild in FindVisualChildren<T>(child))
+                    {
+                        yield return childOfChild;
+                    }
+                }
+            }
         }
 
         public void MakeDraggable(System.Windows.UIElement moveThisElement, System.Windows.UIElement movedByElement)
@@ -102,27 +188,6 @@ namespace ArunaPaintProject
                 transform.X += currentPoint.X - originalPoint.X;
                 transform.Y += currentPoint.Y - originalPoint.Y;
             };
-        }
-
-        private void MainButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (isShown)
-            {
-                foreach (Button b in functionButtons)
-                {
-                    b.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                isShown = false;
-            }
-            else
-            {
-                foreach (Button b in functionButtons)
-                {
-                    b.Visibility = System.Windows.Visibility.Visible;
-                }
-                isShown = true;
-            }
-            
         }
 
     }

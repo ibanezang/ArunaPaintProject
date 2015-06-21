@@ -14,7 +14,7 @@
         <TabControl x:Name="MainTabControl">
             <TabItem Header="Untitled">
                 <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" >
-                    <InkCanvas HorizontalAlignment="Center" VerticalAlignment="Top" Height="720" Width="1024"/>
+                    <InkCanvas HorizontalAlignment="Center" VerticalAlignment="Top" Height="720" Width="1024" MouseLeftButtonUp=""/>
                 </StackPanel>
             </TabItem>
             <TabItem x:Name="AddTab" Header="+" GotFocus="AddTab_GotFocus"></TabItem>

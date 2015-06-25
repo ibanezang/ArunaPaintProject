@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArunaPaintProject.UIComponent;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,12 +22,17 @@ namespace ArunaPaintProject
     public partial class MainWindow : Window
     {
         List<Button> functionButtons;
-        TabItem activeTabItem = null;
+        Button undoButton;
+        Button redoButton;
+
+        ActionTabItem activeTabItem = null;
+        ActionInkCanvas activeCanvas = null;
         bool isShown;
 
         public MainWindow()
         {
             InitializeComponent();
+
             functionButtons = new List<Button>();
             MakeDraggable(ButtonsGrid, DragArea);
             isShown = false;
@@ -34,18 +40,25 @@ namespace ArunaPaintProject
             functionButtons.Add(createButton(Colors.Red));
             functionButtons.Add(createButton(Colors.Purple));
             functionButtons.Add(createButton(Colors.Gray));
+            functionButtons.Add(createRedoButton());
+            functionButtons.Add(createUndoButton());
             foreach (Button b in functionButtons)
             {
                 b.Visibility = System.Windows.Visibility.Collapsed;
                 FunctionButtonsPanel.Children.Add(b);
             }
 
-            updateActiveTabItem();
+
+            AddTab.IsSelected = false;
+            MainTabControl.Items
+                .Insert(MainTabControl.Items.Count - 1
+                , createNewTab("Untitled"));
+
         }
 
         private void updateActiveTabItem()
         {
-            var items = FindVisualChildren<TabItem>(MainTabControl);
+            var items = FindVisualChildren<ActionTabItem>(MainTabControl);
             foreach (var item in items)
             {
                 if (item.IsSelected)
@@ -66,7 +79,7 @@ namespace ArunaPaintProject
 
         private TabItem createNewTab(string title)
         {
-            TabItem item = new TabItem();
+            ActionTabItem item = new ActionTabItem();
             item.Header = title;
             item.IsSelected = true;
 
@@ -74,11 +87,13 @@ namespace ArunaPaintProject
             panel.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
             panel.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
 
-            var canvas = new InkCanvas();
+            var canvas = new ActionInkCanvas();
+            canvas.Strokes.StrokesChanged += UpdateUndoRedoButton;
             canvas.Width = 1024;
             canvas.Height = 720;
 
             item.Content = panel;
+            item.ActionCanvas = canvas;
             panel.Children.Add(canvas);
             return item;
         }
@@ -93,32 +108,45 @@ namespace ArunaPaintProject
 
         public Button createUndoButton()
         {
-            Button button = new Button();
-            button.Content = "Undo";
-            button.Width = 50;
-            button.Height = 50;
-            button.Click += undo;
-            return button;
+            undoButton = new Button();
+            undoButton.Content = "Undo";
+            undoButton.Width = 50;
+            undoButton.Height = 50;
+            undoButton.Click += undo;
+            return undoButton;
         }
 
         public Button createRedoButton()
         {
-            Button button = new Button();
-            button.Content = "Redo";
-            button.Width = 50;
-            button.Height = 50;
-            button.Click += redo;
-            return button;
+            redoButton = new Button();
+            redoButton.Content = "Redo";
+            redoButton.Width = 50;
+            redoButton.Height = 50;
+            redoButton.Click += redo;
+            return redoButton;
         }
 
         private void undo(object sender, RoutedEventArgs e)
         {
-
+            activeTabItem.ActionCanvas.Undo();
+            updateUndoRedoActionButtons();
         }
 
         private void redo(object sender, RoutedEventArgs e)
         {
+            activeTabItem.ActionCanvas.Redo();
+            updateUndoRedoActionButtons();
+        }
 
+        private void UpdateUndoRedoButton(object sender, System.Windows.Ink.StrokeCollectionChangedEventArgs e)
+        {
+            updateUndoRedoActionButtons();
+        }
+
+        private void updateUndoRedoActionButtons()
+        {
+            undoButton.IsEnabled = activeTabItem.ActionCanvas.CanUndo();
+            redoButton.IsEnabled = activeTabItem.ActionCanvas.CanRedo();
         }
                 
         private void MainButton_Click(object sender, RoutedEventArgs e)
@@ -162,6 +190,25 @@ namespace ArunaPaintProject
             }
         }
 
+        public static IEnumerable<T> FindLogicalChildren<T>(FrameworkContentElement depObj) where T : FrameworkContentElement
+        {
+            if (depObj != null)
+            {
+                foreach (FrameworkContentElement child in LogicalTreeHelper.GetChildren(depObj))
+                {
+                    if (child != null && child is T)
+                    {
+                        yield return (T)child;
+                    }
+
+                    foreach (T childOfChild in FindLogicalChildren<T>(child))
+                    {
+                        yield return childOfChild;
+                    }
+                }
+            }
+        }
+
         public void MakeDraggable(System.Windows.UIElement moveThisElement, System.Windows.UIElement movedByElement)
         {
             bool isMousePressed = false;
@@ -188,6 +235,12 @@ namespace ArunaPaintProject
                 transform.X += currentPoint.X - originalPoint.X;
                 transform.Y += currentPoint.Y - originalPoint.Y;
             };
+        }
+
+        private void Window_ContentRendered_1(object sender, EventArgs e)
+        {
+            updateActiveTabItem();
+            updateUndoRedoActionButtons();
         }
 
     }

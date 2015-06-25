@@ -13,11 +13,16 @@ namespace ArunaPaintProject.Class
 
         public ActionManager()
         {
+            stackInitialization();
+        }
+
+        private void stackInitialization()
+        {
             undoStack = new Stack<IAction>();
             redoStack = new Stack<IAction>();
         }
 
-        public void DoAction(IAction action)
+        public void SaveAction(IAction action)
         {
             undoStack.Push(action);
             redoStack.Clear();

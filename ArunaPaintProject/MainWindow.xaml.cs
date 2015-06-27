@@ -53,7 +53,14 @@ namespace ArunaPaintProject
             MainTabControl.Items
                 .Insert(MainTabControl.Items.Count - 1
                 , createNewTab("Untitled"));
+            MainTabControl.SelectionChanged += MainTabControl_SelectionChanged;
 
+        }
+
+        void MainTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            updateActiveTabItem();
+            updateUndoRedoActionButtons();
         }
 
         private void updateActiveTabItem()

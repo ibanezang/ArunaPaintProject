@@ -11,25 +11,23 @@ namespace ArunaPaintProject.Class
     public class DrawAction : IAction
     {
         private InkCanvas originalCanvas;
-        private StrokeCollection undoStrokes;
-        private StrokeCollection redoStrokes;
+        private Stroke changedStroke;
 
         public DrawAction(InkCanvas originalCanvas)
         {
             this.originalCanvas = originalCanvas;
             //save canvas strokes
-            this.undoStrokes = originalCanvas.Strokes.Clone();
+            this.changedStroke = originalCanvas.Strokes.Last();
         }
 
         public void Undo()
         {
-            this.redoStrokes = this.originalCanvas.Strokes.Clone();
-            this.originalCanvas.Strokes = undoStrokes;
+            this.originalCanvas.Strokes.Remove(changedStroke);
         }
 
         public void Redo()
         {
-            this.originalCanvas.Strokes = redoStrokes;
+            this.originalCanvas.Strokes.Add(changedStroke);
         }
     }
 }

@@ -15,14 +15,20 @@ namespace ArunaPaintProject.UIComponent
         public ActionInkCanvas()
         {
             InitializeActionManager();
-            this.PreviewMouseLeftButtonDown += ActionInkCanvas_PreviewMouseLeftButtonDown;
+            //this.PreviewMouseLeftButtonDown += ActionInkCanvas_PreviewMouseLeftButtonDown;
+            this.MouseLeftButtonUp += ActionInkCanvas_MouseLeftButtonUp;
         }
 
-        void ActionInkCanvas_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        void ActionInkCanvas_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             saveAction();
         }
 
+        void Strokes_StrokesChanged(object sender, System.Windows.Ink.StrokeCollectionChangedEventArgs e)
+        {
+            saveAction();
+        }
+        
         private void InitializeActionManager()
         {
             // empty Canvas

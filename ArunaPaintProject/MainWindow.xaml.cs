@@ -53,7 +53,14 @@ namespace ArunaPaintProject
             MainTabControl.Items
                 .Insert(MainTabControl.Items.Count - 1
                 , createNewTab("Untitled"));
+            MainTabControl.SelectionChanged += MainTabControl_SelectionChanged;
 
+        }
+
+        void MainTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            updateActiveTabItem();
+            updateUndoRedoActionButtons();
         }
 
         private void updateActiveTabItem()
@@ -88,7 +95,7 @@ namespace ArunaPaintProject
             panel.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
 
             var canvas = new ActionInkCanvas();
-            canvas.Strokes.StrokesChanged += UpdateUndoRedoButton;
+            canvas.MouseLeftButtonUp += canvas_MouseLeftButtonUp;
             canvas.Width = 1024;
             canvas.Height = 720;
 
@@ -96,6 +103,11 @@ namespace ArunaPaintProject
             item.ActionCanvas = canvas;
             panel.Children.Add(canvas);
             return item;
+        }
+
+        void canvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            updateUndoRedoActionButtons();
         }
 
         public Button createButton(Color color)
@@ -137,12 +149,7 @@ namespace ArunaPaintProject
             activeTabItem.ActionCanvas.Redo();
             updateUndoRedoActionButtons();
         }
-
-        private void UpdateUndoRedoButton(object sender, System.Windows.Ink.StrokeCollectionChangedEventArgs e)
-        {
-            updateUndoRedoActionButtons();
-        }
-
+        
         private void updateUndoRedoActionButtons()
         {
             undoButton.IsEnabled = activeTabItem.ActionCanvas.CanUndo();

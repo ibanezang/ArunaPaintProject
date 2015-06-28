@@ -11,18 +11,31 @@ namespace ArunaPaintProject.UIComponent
     public class ActionInkCanvas : InkCanvas
     {
         private ActionManager<DrawAction> actionManager;
+        private bool isEditing;
 
         public ActionInkCanvas()
         {
             InitializeActionManager();
-            //this.PreviewMouseLeftButtonDown += ActionInkCanvas_PreviewMouseLeftButtonDown;
             this.MouseLeftButtonUp += ActionInkCanvas_MouseLeftButtonUp;
+            this.PreviewMouseLeftButtonDown += ActionInkCanvas_PreviewMouseLeftButtonDown;
+        }
+
+        void ActionInkCanvas_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            // to validate editing state in the canvas
+            this.isEditing = true;
         }
 
         void ActionInkCanvas_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            saveAction();
+            if (this.isEditing)
+            {
+                saveAction();
+                this.isEditing = false;
+            }
         }
+
+        
 
         void Strokes_StrokesChanged(object sender, System.Windows.Ink.StrokeCollectionChangedEventArgs e)
         {
@@ -33,6 +46,7 @@ namespace ArunaPaintProject.UIComponent
         {
             // empty Canvas
             this.actionManager = new ActionManager<DrawAction>();
+            this.isEditing = false;
         }
 
         private void saveAction()

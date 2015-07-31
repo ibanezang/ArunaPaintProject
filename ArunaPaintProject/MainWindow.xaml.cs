@@ -24,10 +24,12 @@ namespace ArunaPaintProject
         List<Button> functionButtons;
         Button undoButton;
         Button redoButton;
+        Button eraserButton;
 
         ActionTabItem activeTabItem = null;
         ActionInkCanvas activeCanvas = null;
         bool isShown;
+        bool isEraserMode;
 
         public MainWindow()
         {
@@ -39,7 +41,7 @@ namespace ArunaPaintProject
             functionButtons.Add(createButton(Colors.AliceBlue));
             functionButtons.Add(createButton(Colors.Red));
             functionButtons.Add(createButton(Colors.Purple));
-            functionButtons.Add(createButton(Colors.Gray));
+            functionButtons.Add(createEraserButton());
             functionButtons.Add(createRedoButton());
             functionButtons.Add(createUndoButton());
             foreach (Button b in functionButtons)
@@ -71,6 +73,7 @@ namespace ArunaPaintProject
                 if (item.IsSelected)
                 {
                     activeTabItem = item;
+                    activeCanvas = item.ActionCanvas;
                     break;
                 }
             }
@@ -98,6 +101,8 @@ namespace ArunaPaintProject
             canvas.MouseLeftButtonUp += canvas_MouseLeftButtonUp;
             canvas.Width = 1024;
             canvas.Height = 720;
+            canvas.Background = Brushes.Black;
+            canvas.DefaultDrawingAttributes.Color = Colors.White;
 
             item.Content = panel;
             item.ActionCanvas = canvas;
@@ -116,6 +121,54 @@ namespace ArunaPaintProject
             newButton.Width = 50;
             newButton.Height = 50;
             return newButton;
+        }
+
+        public Button createEraserButton()
+        {
+            eraserButton = new Button();
+            eraserButton.Content = "Eraser";
+            eraserButton.Width = 50;
+            eraserButton.Height = 50;
+            eraserButton.Click += eraserButton_Click;
+
+            return eraserButton;
+        }
+
+        void eraserButton_Click(object sender, RoutedEventArgs e)
+        {
+            changeEraserMode();
+        }
+
+        void changeEraserMode()
+        {
+            if (!isEraserMode)
+            {
+                enableEraserMode();
+            }
+            else
+            {
+                disableEraserMode();
+            }
+        }
+
+        public void enableEraserMode()
+        {
+            activeCanvas.DefaultDrawingAttributes.Color = Colors.Black;
+            activeCanvas.DefaultDrawingAttributes.Width = 15;
+            activeCanvas.DefaultDrawingAttributes.Height = 15;
+            activeCanvas.UseCustomCursor = true;
+            string activeDir = System.IO.Directory.GetCurrentDirectory();
+            activeCanvas.Cursor = new Cursor(activeDir + ".\\Images\\Eraser.cur");
+            isEraserMode = true;
+        }
+
+        public void disableEraserMode()
+        {
+            activeCanvas.DefaultDrawingAttributes.Color = Colors.White;
+            activeCanvas.DefaultDrawingAttributes.Width = 2;
+            activeCanvas.DefaultDrawingAttributes.Height = 2;
+            activeCanvas.UseCustomCursor = false;
+            isEraserMode = false;
         }
 
         public Button createUndoButton()

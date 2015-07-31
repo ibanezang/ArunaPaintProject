@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArunaPaintProject.Class
+namespace ArunaPaintProject.Class.Action
 {
-    public class ActionManager<BaseAction>
+    public class ActionManager
     {
         private Stack<IAction> undoStack;
         private Stack<IAction> redoStack;

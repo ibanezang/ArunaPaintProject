@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using ArunaPaintProject.Class;
+using ArunaPaintProject.Class.Action;
 
 namespace ArunaPaintProject.UIComponent
 {
     public class ActionInkCanvas : InkCanvas
     {
-        private ActionManager<DrawAction> actionManager;
+        private ActionManager actionManager;
         private bool isEditing;
 
         public ActionInkCanvas()
@@ -19,6 +19,7 @@ namespace ArunaPaintProject.UIComponent
             this.MouseLeftButtonUp += ActionInkCanvas_MouseLeftButtonUp;
             this.PreviewMouseLeftButtonDown += ActionInkCanvas_PreviewMouseLeftButtonDown;
         }
+
 
         void ActionInkCanvas_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
@@ -34,25 +35,21 @@ namespace ArunaPaintProject.UIComponent
                 this.isEditing = false;
             }
         }
-
-        
-
-        void Strokes_StrokesChanged(object sender, System.Windows.Ink.StrokeCollectionChangedEventArgs e)
-        {
-            saveAction();
-        }
         
         private void InitializeActionManager()
         {
             // empty Canvas
-            this.actionManager = new ActionManager<DrawAction>();
+            this.actionManager = new ActionManager();
             this.isEditing = false;
         }
 
         private void saveAction()
         {
             // capture the state of final canvas
-            var action = new DrawAction(this);
+            IAction action;
+
+            action = new DrawAction(this); 
+
             this.actionManager.SaveAction(action);
         }
 

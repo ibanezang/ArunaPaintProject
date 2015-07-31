@@ -180,7 +180,10 @@ namespace ArunaPaintProject
 
         public void disableEraserMode()
         {
-            penManager.ChangeColor(Brushes.White).SetPen(activeCanvas);
+            if (penManager.GetCurrentPen().GetPenColor() == Brushes.Black)
+            {
+                penManager.ChangeColor(Brushes.White).SetPen(activeCanvas);
+            }
             isEraserMode = false;
         }
 

@@ -79,7 +79,6 @@
     <Compile Include="Class\Pen\GreenPen.cs" />
     <Compile Include="Class\Pen\PenHandler.cs" />
     <Compile Include="Class\Pen\PenManager.cs" />
-    <Compile Include="Class\Pen\PenColors.cs" />
     <Compile Include="Class\Pen\RedPen.cs" />
     <Compile Include="Class\Pen\WhitePen.cs" />
     <Compile Include="UIComponent\ActionInkCanvas.cs" />

@@ -24,9 +24,9 @@ namespace ArunaPaintProject.Class.Pen
             canvas.Cursor = new Cursor(activeDir + ".\\Images\\Eraser.cur");
         }
 
-        public override PenColors GetPenColor()
+        public override Brush GetPenColor()
         {
-            return PenColors.Black;
+            return Brushes.Black;
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace ArunaPaintProject.Class.Pen
 {
@@ -15,7 +16,7 @@ namespace ArunaPaintProject.Class.Pen
 		    this.next = next;
 	    }
 
-	    public PenHandler GetPen(PenColors color) {
+	    public PenHandler GetPen(Brush color) {
 		    
             if (this.GetPenColor() == color) {
 			    return this;
@@ -28,6 +29,6 @@ namespace ArunaPaintProject.Class.Pen
 
 	    public abstract void SetPen(ActionInkCanvas canvas);
 
-	    public abstract PenColors GetPenColor();
+	    public abstract Brush GetPenColor();
     }
 }

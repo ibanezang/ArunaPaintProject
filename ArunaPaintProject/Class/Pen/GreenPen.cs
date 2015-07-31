@@ -22,9 +22,9 @@ namespace ArunaPaintProject.Class.Pen
             canvas.UseCustomCursor = false;
         }
 
-        public override PenColors GetPenColor()
+        public override Brush GetPenColor()
         {
-            return PenColors.Green;
+            return Brushes.Green;
         }
     }
 }

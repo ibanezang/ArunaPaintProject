@@ -11,6 +11,7 @@
                 </Grid> 
             </ControlTemplate>
         </Grid.Resources>
+        
         <TabControl x:Name="MainTabControl">
             <!--<TabItem Header="Untitled">
                 <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" >
@@ -19,17 +20,28 @@
             </TabItem>-->
             <TabItem x:Name="AddTab" Header="+" GotFocus="AddTab_GotFocus"></TabItem>
         </TabControl>
-        <Grid x:Name="ButtonsGrid" Width="50" Height="Auto" >
+        <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="100"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <StackPanel>
-                <Rectangle x:Name="DragArea" Fill="Green" Width="50" Height="25" Grid.Row="0" Cursor="Hand"></Rectangle>
-                <Button x:Name="MainButton" Width="50" Height="50" Grid.Row="0" Click="MainButton_Click"></Button>
-            </StackPanel>
-            <StackPanel Grid.Row="1" x:Name="FunctionButtonsPanel">
-            </StackPanel>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid x:Name="ButtonsGrid" Width="50" Height="Auto" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackPanel>
+                    <Rectangle x:Name="DragArea" Fill="Green" Width="50" Height="25" Grid.Row="0" Cursor="Hand"></Rectangle>
+                    <Button x:Name="MainButton" Width="50" Height="50" Grid.Row="0" Click="MainButton_Click"></Button>
+                </StackPanel>
+                <StackPanel Grid.Row="1" x:Name="FunctionButtonsPanel">
+                </StackPanel>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

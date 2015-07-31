@@ -1,4 +1,5 @@
-﻿using ArunaPaintProject.UIComponent;
+﻿using ArunaPaintProject.Class.Pen;
+using ArunaPaintProject.UIComponent;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,22 +25,30 @@ namespace ArunaPaintProject
         List<Button> functionButtons;
         Button undoButton;
         Button redoButton;
+        Button eraserButton;
 
         ActionTabItem activeTabItem = null;
         ActionInkCanvas activeCanvas = null;
+
+        PenManager penManager;
         bool isShown;
+        bool isEraserMode;
 
         public MainWindow()
         {
             InitializeComponent();
 
+            //initialize pen manager
+            penManager = new PenManager();
+
             functionButtons = new List<Button>();
             MakeDraggable(ButtonsGrid, DragArea);
             isShown = false;
-            functionButtons.Add(createButton(Colors.AliceBlue));
-            functionButtons.Add(createButton(Colors.Red));
-            functionButtons.Add(createButton(Colors.Purple));
-            functionButtons.Add(createButton(Colors.Gray));
+            functionButtons.Add(createButton(Brushes.Red));
+            functionButtons.Add(createButton(Brushes.Green));
+            functionButtons.Add(createButton(Brushes.Blue));
+            functionButtons.Add(createButton(Brushes.White));
+            functionButtons.Add(createEraserButton());
             functionButtons.Add(createRedoButton());
             functionButtons.Add(createUndoButton());
             foreach (Button b in functionButtons)
@@ -71,9 +80,11 @@ namespace ArunaPaintProject
                 if (item.IsSelected)
                 {
                     activeTabItem = item;
+                    activeCanvas = item.ActionCanvas;
                     break;
                 }
             }
+            penManager.GetCurrentPen().SetPen(activeCanvas);
         }
 
         private void AddTab_GotFocus(object sender, RoutedEventArgs e)
@@ -98,6 +109,8 @@ namespace ArunaPaintProject
             canvas.MouseLeftButtonUp += canvas_MouseLeftButtonUp;
             canvas.Width = 1024;
             canvas.Height = 720;
+            canvas.Background = Brushes.Black;
+            penManager.GetCurrentPen().SetPen(canvas);
 
             item.Content = panel;
             item.ActionCanvas = canvas;
@@ -110,12 +123,68 @@ namespace ArunaPaintProject
             updateUndoRedoActionButtons();
         }
 
-        public Button createButton(Color color)
+        public Button createButton(Brush color)
         {
             Button newButton = new Button();
             newButton.Width = 50;
             newButton.Height = 50;
+            newButton.Background = color;
+            newButton.Click += colorButton_Click;
             return newButton;
+        }
+
+        void colorButton_Click(object sender, RoutedEventArgs e)
+        {
+            changePenColor(((Button)sender).Background);
+            disableEraserMode();
+        }
+
+        void changePenColor(Brush color)
+        {
+            penManager.ChangeColor(color).SetPen(activeCanvas);
+        }
+
+        public Button createEraserButton()
+        {
+            eraserButton = new Button();
+            eraserButton.Content = "Eraser";
+            eraserButton.Width = 50;
+            eraserButton.Height = 50;
+            eraserButton.Click += eraserButton_Click;
+
+            return eraserButton;
+        }
+
+        void eraserButton_Click(object sender, RoutedEventArgs e)
+        {
+            changeEraserMode();
+        }
+
+        void changeEraserMode()
+        {
+            if (!isEraserMode)
+            {
+                enableEraserMode();
+            }
+            else
+            {
+                disableEraserMode();
+            }
+        }
+
+        public void enableEraserMode()
+        {
+            penManager.ChangeColor(Brushes.Black).SetPen(activeCanvas);
+            isEraserMode = true;
+        }
+
+        public void disableEraserMode()
+        {
+            if (penManager.GetCurrentPen().GetPenColor() == Brushes.Black)
+            {
+                penManager.ChangeColor(Brushes.White).SetPen(activeCanvas);
+            }
+            isEraserMode = false;
         }
 
         public Button createUndoButton()
@@ -190,25 +259,6 @@ namespace ArunaPaintProject
                     }
 
                     foreach (T childOfChild in FindVisualChildren<T>(child))
-                    {
-                        yield return childOfChild;
-                    }
-                }
-            }
-        }
-
-        public static IEnumerable<T> FindLogicalChildren<T>(FrameworkContentElement depObj) where T : FrameworkContentElement
-        {
-            if (depObj != null)
-            {
-                foreach (FrameworkContentElement child in LogicalTreeHelper.GetChildren(depObj))
-                {
-                    if (child != null && child is T)
-                    {
-                        yield return (T)child;
-                    }
-
-                    foreach (T childOfChild in FindLogicalChildren<T>(child))
                     {
                         yield return childOfChild;
                     }

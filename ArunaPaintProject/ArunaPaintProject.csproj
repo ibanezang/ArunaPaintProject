@@ -49,10 +49,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dragablz, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dragablz.0.0.1.108\lib\net45\Dragablz.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -74,6 +70,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Class\Pen\BlackPen.cs" />
+    <Compile Include="Class\Pen\BluePen.cs" />
+    <Compile Include="Class\Pen\GreenPen.cs" />
+    <Compile Include="Class\Pen\PenHandler.cs" />
+    <Compile Include="Class\Pen\PenManager.cs" />
+    <Compile Include="Class\Pen\RedPen.cs" />
+    <Compile Include="Class\Pen\WhitePen.cs" />
     <Compile Include="UIComponent\ActionInkCanvas.cs" />
     <Compile Include="UIComponent\ActionTabItem.cs" />
     <Page Include="MainWindow.xaml">
@@ -84,10 +87,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Class\ActionManager.cs" />
-    <Compile Include="Class\DrawAction.cs" />
-    <Compile Include="Class\IAction.cs" />
-    <Compile Include="Class\UndoCommand.cs" />
+    <Compile Include="Class\Action\ActionManager.cs" />
+    <Compile Include="Class\Action\DrawAction.cs" />
+    <Compile Include="Class\Action\IAction.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -138,6 +140,12 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Eraser.cur">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

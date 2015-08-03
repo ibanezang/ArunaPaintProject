@@ -13,11 +13,6 @@
         </Grid.Resources>
         
         <TabControl x:Name="MainTabControl">
-            <!--<TabItem Header="Untitled">
-                <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" >
-                    <InkCanvas HorizontalAlignment="Center" VerticalAlignment="Top" Height="720" Width="1024"/>
-                </StackPanel>
-            </TabItem>-->
             <TabItem x:Name="AddTab" Header="+" GotFocus="AddTab_GotFocus"></TabItem>
         </TabControl>
         <Grid>

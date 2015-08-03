@@ -34,9 +34,13 @@ namespace ArunaPaintProject
         bool isShown;
         bool isEraserMode;
 
+        int tabCounter;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            tabCounter = 1;
 
             //initialize pen manager
             penManager = new PenManager();
@@ -59,11 +63,17 @@ namespace ArunaPaintProject
 
 
             AddTab.IsSelected = false;
-            MainTabControl.Items
-                .Insert(MainTabControl.Items.Count - 1
-                , createNewTab("Untitled"));
+            createNewTab();
             MainTabControl.SelectionChanged += MainTabControl_SelectionChanged;
 
+        }
+
+        // create new tab
+        void createNewTab()
+        {
+            MainTabControl.Items
+                .Insert(MainTabControl.Items.Count - 1
+                , createNewTab("Untitled " + (tabCounter++)));
         }
 
         void MainTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -90,15 +100,12 @@ namespace ArunaPaintProject
         private void AddTab_GotFocus(object sender, RoutedEventArgs e)
         {
             AddTab.IsSelected = false;
-            MainTabControl.Items
-                .Insert(MainTabControl.Items.Count - 1
-                , createNewTab("Untitled " + (MainTabControl.Items.Count - 1)));
+            createNewTab();
         }
 
         private TabItem createNewTab(string title)
         {
-            ActionTabItem item = new ActionTabItem();
-            item.Header = title;
+            ActionTabItem item = new ActionTabItem(title);
             item.IsSelected = true;
 
             var panel = new StackPanel();

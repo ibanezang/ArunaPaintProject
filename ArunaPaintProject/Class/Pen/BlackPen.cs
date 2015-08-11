@@ -28,5 +28,10 @@ namespace ArunaPaintProject.Class.Pen
         {
             return Brushes.Black;
         }
+
+        public override void ChangePenSize(int penSize)
+        {
+            // black pen is used for eraser
+        }
     }
 }

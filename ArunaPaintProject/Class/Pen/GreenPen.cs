@@ -17,14 +17,19 @@ namespace ArunaPaintProject.Class.Pen
         public override void SetPen(UIComponent.ActionInkCanvas canvas)
         {
             canvas.DefaultDrawingAttributes.Color = Colors.Green;
-            canvas.DefaultDrawingAttributes.Width = 2;
-            canvas.DefaultDrawingAttributes.Height = 2;
+            canvas.DefaultDrawingAttributes.Width = penSize;
+            canvas.DefaultDrawingAttributes.Height = penSize;
             canvas.UseCustomCursor = false;
         }
 
         public override Brush GetPenColor()
         {
             return Brushes.Green;
+        }
+
+        public override void ChangePenSize(int penSize)
+        {
+            this.penSize = penSize;
         }
     }
 }

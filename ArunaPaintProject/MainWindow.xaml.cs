@@ -36,6 +36,11 @@ namespace ArunaPaintProject
 
         int tabCounter;
 
+        //pen sizes
+        const int PEN_SIZE_SMALL = 2;
+        const int PEN_SIZE_MEDIUM = 4;
+        const int PEN_SIZE_LARGE = 6;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -48,6 +53,9 @@ namespace ArunaPaintProject
             functionButtons = new List<Button>();
             MakeDraggable(ButtonsGrid, DragArea);
             isShown = false;
+            functionButtons.Add(createSizeButton("S"));
+            functionButtons.Add(createSizeButton("M"));
+            functionButtons.Add(createSizeButton("L"));
             functionButtons.Add(createButton(Brushes.Red));
             functionButtons.Add(createButton(Brushes.Green));
             functionButtons.Add(createButton(Brushes.Blue));
@@ -140,12 +148,43 @@ namespace ArunaPaintProject
             return newButton;
         }
 
+
         void colorButton_Click(object sender, RoutedEventArgs e)
         {
             changePenColor(((Button)sender).Background);
             disableEraserMode();
         }
 
+        public Button createSizeButton(string label)
+        {
+            Button newButton = new Button();
+            newButton.Width = 50;
+            newButton.Height = 50;
+            newButton.Content = label;
+            newButton.Click += sizeButton_Click;
+            return newButton;
+        }
+
+        void sizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            var content = ((Button)sender).Content.ToString();
+            var size = 0;
+            switch (content)
+            {
+
+                case "S": size = PEN_SIZE_SMALL;
+                    break;
+                case "M": size = PEN_SIZE_MEDIUM;
+                    break;
+                case "L": size = PEN_SIZE_LARGE;
+                    break;
+                default: size = PEN_SIZE_SMALL;
+                    break;
+            }
+
+            penManager.ChangePenSize(size).SetPen(activeCanvas);
+        }
+        
         void changePenColor(Brush color)
         {
             penManager.ChangeColor(color).SetPen(activeCanvas);

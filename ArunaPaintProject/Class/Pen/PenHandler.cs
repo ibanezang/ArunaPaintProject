@@ -11,9 +11,11 @@ namespace ArunaPaintProject.Class.Pen
     public abstract class PenHandler
     {
         private PenHandler next;
+        protected int penSize;
 
 	    public PenHandler(PenHandler next) {
 		    this.next = next;
+            this.penSize = 2;
 	    }
 
 	    public PenHandler GetPen(Brush color) {
@@ -30,5 +32,7 @@ namespace ArunaPaintProject.Class.Pen
 	    public abstract void SetPen(ActionInkCanvas canvas);
 
 	    public abstract Brush GetPenColor();
+
+        public abstract void ChangePenSize(int penSize);
     }
 }

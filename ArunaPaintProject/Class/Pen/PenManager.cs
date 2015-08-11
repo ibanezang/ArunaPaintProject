@@ -11,9 +11,12 @@ namespace ArunaPaintProject.Class.Pen
     {
         private PenHandler pens;
         private Brush currentColor;
+        private int penSize;
+
         public PenManager()
         {
             currentColor = Brushes.White; // default value is white
+            penSize = 2; // default value for penSize
             buildChain();
         }
 
@@ -28,9 +31,17 @@ namespace ArunaPaintProject.Class.Pen
             return GetCurrentPen();
         }
 
+        public PenHandler ChangePenSize(int penSize)
+        {
+            this.penSize = penSize;
+            return GetCurrentPen();
+        }
+
         public PenHandler GetCurrentPen()
         {
-            return pens.GetPen(currentColor);
+            var pen = pens.GetPen(currentColor);
+            pen.ChangePenSize(penSize);
+            return pen;
         }
     }
 }

@@ -2,6 +2,7 @@
 using ArunaPaintProject.UIComponent;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,9 +38,9 @@ namespace ArunaPaintProject
         int tabCounter;
 
         //pen sizes
-        const int PEN_SIZE_SMALL = 2;
-        const int PEN_SIZE_MEDIUM = 4;
-        const int PEN_SIZE_LARGE = 6;
+        int PEN_SIZE_SMALL = int.Parse(ConfigurationManager.AppSettings["Pen.Size.Small"]);
+        int PEN_SIZE_MEDIUM = int.Parse(ConfigurationManager.AppSettings["Pen.Size.Medium"]);
+        int PEN_SIZE_LARGE = int.Parse(ConfigurationManager.AppSettings["Pen.Size.Large"]);
 
         public MainWindow()
         {
@@ -53,6 +54,7 @@ namespace ArunaPaintProject
             functionButtons = new List<Button>();
             MakeDraggable(ButtonsGrid, DragArea);
             isShown = false;
+
             functionButtons.Add(createSizeButton("S"));
             functionButtons.Add(createSizeButton("M"));
             functionButtons.Add(createSizeButton("L"));
@@ -63,6 +65,7 @@ namespace ArunaPaintProject
             functionButtons.Add(createEraserButton());
             functionButtons.Add(createRedoButton());
             functionButtons.Add(createUndoButton());
+
             foreach (Button b in functionButtons)
             {
                 b.Visibility = System.Windows.Visibility.Collapsed;

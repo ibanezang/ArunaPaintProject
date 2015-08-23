@@ -24,10 +24,14 @@ namespace ArunaPaintProject
     public partial class MainWindow : Window
     {
         List<Button> functionButtons;
-        Button undoButton;
-        Button redoButton;
-        Button eraserButton;
+        List<Button> penSizeButtons;
+        List<Button> penColorButtons;
+        List<Button> actionButtons;
 
+        Visibility penSizeButtonState;
+        Visibility penColorButtonState;
+        Visibility actionButtonState;
+        
         ActionTabItem activeTabItem = null;
         ActionInkCanvas activeCanvas = null;
 
@@ -55,23 +59,17 @@ namespace ArunaPaintProject
             MakeDraggable(ButtonsGrid, DragArea);
             isShown = false;
 
-            functionButtons.Add(createSizeButton("S"));
-            functionButtons.Add(createSizeButton("M"));
-            functionButtons.Add(createSizeButton("L"));
-            functionButtons.Add(createButton(Brushes.Red));
-            functionButtons.Add(createButton(Brushes.Green));
-            functionButtons.Add(createButton(Brushes.Blue));
-            functionButtons.Add(createButton(Brushes.White));
-            functionButtons.Add(createEraserButton());
-            functionButtons.Add(createRedoButton());
-            functionButtons.Add(createUndoButton());
+            MainButton.Background = loadBackgroundImage("Button.Main");
+            createPenSizeButton();
+            createPenColorButton();
+            createActionButton();
+            createEraserButton();
 
             foreach (Button b in functionButtons)
             {
                 b.Visibility = System.Windows.Visibility.Collapsed;
                 FunctionButtonsPanel.Children.Add(b);
             }
-
 
             AddTab.IsSelected = false;
             createNewTab();
@@ -141,7 +139,40 @@ namespace ArunaPaintProject
             updateUndoRedoActionButtons();
         }
 
-        public Button createButton(Brush color)
+        public void createPenColorButton()
+        {
+            penColorButton.Width = 50;
+            penColorButton.Height = 50;
+            penColorButton.Background = loadBackgroundImage("Button.Color");
+            penColorButton.Click += penColorButton_Click;
+            createAllColorButton();
+        }
+
+        void penColorButton_Click(object sender, RoutedEventArgs e)
+        {
+            penColorButtonState = penColorButtonState != System.Windows.Visibility.Collapsed ?
+                System.Windows.Visibility.Collapsed : System.Windows.Visibility.Visible;
+            changePenColorButtonState(penColorButtonState);
+        }
+
+        void changePenColorButtonState(System.Windows.Visibility state)
+        {
+            penColorButtons.ForEach(x => x.Visibility = state);
+        }
+
+        public void createAllColorButton()
+        {
+            penColorButtonState = System.Windows.Visibility.Collapsed;
+            penColorButtons = new List<Button>();
+            penColorButtons.Add(createColorButton(Brushes.Red));
+            penColorButtons.Add(createColorButton(Brushes.Green));
+            penColorButtons.Add(createColorButton(Brushes.Blue));
+            penColorButtons.Add(createColorButton(Brushes.White));
+            penColorButtons.ForEach(x => PenColorPanel.Children.Add(x));
+            changePenColorButtonState(penColorButtonState);
+        }
+
+        public Button createColorButton(Brush color)
         {
             Button newButton = new Button();
             newButton.Width = 50;
@@ -158,19 +189,54 @@ namespace ArunaPaintProject
             disableEraserMode();
         }
 
+        public void createPenSizeButton()
+        {
+            penSizeButton.Width = 50;
+            penSizeButton.Height = 50;
+            penSizeButton.Background = loadBackgroundImage("Button.PenSize");
+            penSizeButton.Click += penSizeButton_Click;
+            createAllSizeButtons();
+        }
+
+        void penSizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            penSizeButtonState = penSizeButtonState != System.Windows.Visibility.Collapsed ? 
+                System.Windows.Visibility.Collapsed : System.Windows.Visibility.Visible;
+            changePenSizeButtonState(penSizeButtonState);
+        }
+
+        void changePenSizeButtonState(System.Windows.Visibility state){
+            penSizeButtons.ForEach(x => x.Visibility = state);
+        }
+
+        void createAllSizeButtons()
+        {
+            penSizeButtonState = System.Windows.Visibility.Collapsed;
+            penSizeButtons = new List<Button>();
+            penSizeButtons.Add(createSizeButton("S"));
+            penSizeButtons.Add(createSizeButton("M"));
+            penSizeButtons.Add(createSizeButton("L"));
+            penSizeButtons.ForEach(x => PenSizePanel.Children.Add(x));
+            changePenSizeButtonState(penSizeButtonState);
+        }
+
         public Button createSizeButton(string label)
         {
             Button newButton = new Button();
             newButton.Width = 50;
             newButton.Height = 50;
-            newButton.Content = label;
+            var hiddenLabel = new Label();
+            hiddenLabel.Content = label;
+            hiddenLabel.Visibility = System.Windows.Visibility.Hidden;
+            newButton.Content = hiddenLabel;
+            newButton.Background = loadBackgroundImage("Button.Pensize." + label);
             newButton.Click += sizeButton_Click;
             return newButton;
         }
 
         void sizeButton_Click(object sender, RoutedEventArgs e)
         {
-            var content = ((Button)sender).Content.ToString();
+            var content = ((Label)((Button)sender).Content).Content.ToString();
             var size = 0;
             switch (content)
             {
@@ -195,12 +261,10 @@ namespace ArunaPaintProject
 
         public Button createEraserButton()
         {
-            eraserButton = new Button();
-            eraserButton.Content = "Eraser";
+            eraserButton.Background = loadBackgroundImage("Button.Eraser");
             eraserButton.Width = 50;
             eraserButton.Height = 50;
             eraserButton.Click += eraserButton_Click;
-
             return eraserButton;
         }
 
@@ -236,9 +300,38 @@ namespace ArunaPaintProject
             isEraserMode = false;
         }
 
+        public void createActionButton()
+        {
+            actionButton.Width = 50;
+            actionButton.Height = 50;
+            actionButton.Background = loadBackgroundImage("Button.Action");
+            actionButton.Click += actionButton_Click;
+            createAllActionButtons();
+        }
+
+        void actionButton_Click(object sender, RoutedEventArgs e)
+        {
+            actionButtonState = actionButtonState != System.Windows.Visibility.Collapsed ?
+                System.Windows.Visibility.Collapsed : System.Windows.Visibility.Visible;
+            changeActionButtonState(actionButtonState);
+        }
+
+        void changeActionButtonState(System.Windows.Visibility state)
+        {
+            actionButtons.ForEach(x => x.Visibility = state);
+        }
+
+        void createAllActionButtons()
+        {
+            actionButtonState = System.Windows.Visibility.Collapsed;
+            actionButtons = new List<Button>();
+            actionButtons.Add(createUndoButton());
+            actionButtons.Add(createRedoButton());
+            changeActionButtonState(actionButtonState);
+        }
+
         public Button createUndoButton()
         {
-            undoButton = new Button();
             undoButton.Content = "Undo";
             undoButton.Width = 50;
             undoButton.Height = 50;
@@ -246,9 +339,10 @@ namespace ArunaPaintProject
             return undoButton;
         }
 
+        
+
         public Button createRedoButton()
         {
-            redoButton = new Button();
             redoButton.Content = "Redo";
             redoButton.Width = 50;
             redoButton.Height = 50;
@@ -273,7 +367,8 @@ namespace ArunaPaintProject
             undoButton.IsEnabled = activeTabItem.ActionCanvas.CanUndo();
             redoButton.IsEnabled = activeTabItem.ActionCanvas.CanRedo();
         }
-                
+        
+
         private void MainButton_Click(object sender, RoutedEventArgs e)
         {
             if (isShown)
@@ -349,5 +444,18 @@ namespace ArunaPaintProject
             updateUndoRedoActionButtons();
         }
 
+        private ImageBrush loadBackgroundImage(string imageName)
+        {
+            var image = new ImageBrush(
+                new BitmapImage(
+                    new Uri(
+                        ConfigurationManager.AppSettings[imageName], UriKind.Relative
+                        )));
+            return new ImageBrush(
+                new BitmapImage(
+                    new Uri(
+                        ConfigurationManager.AppSettings[imageName], UriKind.Relative
+                        )));
+        }
     }
 }

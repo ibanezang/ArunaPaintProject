@@ -153,7 +153,28 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\button-eraser.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\button-main.png" />
+    <Resource Include="Images\button-pensize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\button-pensize-l.png" />
+    <Resource Include="Images\button-pensize-m.png" />
+    <Resource Include="Images\button-pensize-s.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\button-color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\button-action-redo.png" />
+    <Resource Include="Images\button-action-undo.png" />
+    <Resource Include="Images\button-action.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

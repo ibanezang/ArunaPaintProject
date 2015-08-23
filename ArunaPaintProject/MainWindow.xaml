@@ -46,6 +46,7 @@
                     <RowDefinition Height="50"></RowDefinition>
                     <RowDefinition Height="50"></RowDefinition>
                     <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -68,8 +69,8 @@
                     <Button Name="redoButton" Grid.Row="3"></Button>
                 </StackPanel>
                 <Button Name="eraserButton" Grid.Row="4"></Button>
-                <StackPanel Grid.Row="1" x:Name="FunctionButtonsPanel">
-                </StackPanel>
+                <Button Name="saveButton" Grid.Row="5"></Button>
+                <Button Name="comingSoonButton" Grid.Row="6"></Button>
             </Grid>
         </Grid>
     </Grid>

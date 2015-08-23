@@ -28,6 +28,7 @@ namespace ArunaPaintProject
         List<Button> penColorButtons;
         List<Button> actionButtons;
 
+        Visibility functionButtonState;
         Visibility penSizeButtonState;
         Visibility penColorButtonState;
         Visibility actionButtonState;
@@ -55,7 +56,6 @@ namespace ArunaPaintProject
             //initialize pen manager
             penManager = new PenManager();
 
-            functionButtons = new List<Button>();
             MakeDraggable(ButtonsGrid, DragArea);
             isShown = false;
 
@@ -64,16 +64,39 @@ namespace ArunaPaintProject
             createPenColorButton();
             createActionButton();
             createEraserButton();
+            createSaveButton();
+            createComingSoonButton();
 
-            foreach (Button b in functionButtons)
-            {
-                b.Visibility = System.Windows.Visibility.Collapsed;
-                FunctionButtonsPanel.Children.Add(b);
-            }
+            configureFunctionButtons();
 
             AddTab.IsSelected = false;
             createNewTab();
             MainTabControl.SelectionChanged += MainTabControl_SelectionChanged;
+
+        }
+
+        
+
+        private void createComingSoonButton()
+        {
+            // do something here
+            comingSoonButton.Width = 50;
+            comingSoonButton.Height = 50;
+            comingSoonButton.Background = loadBackgroundImage("Button.Coming.Soon");
+            comingSoonButton.Click += saveButton_Click;
+        }
+
+        private void createSaveButton()
+        {
+            saveButton.Width = 50;
+            saveButton.Height = 50;
+            saveButton.Background = loadBackgroundImage("Button.Save");
+            saveButton.Click += saveButton_Click;
+        }
+
+        private void saveButton_Click(object sender, RoutedEventArgs e)
+        {
+            // do save routine here
 
         }
 
@@ -164,10 +187,10 @@ namespace ArunaPaintProject
         {
             penColorButtonState = System.Windows.Visibility.Collapsed;
             penColorButtons = new List<Button>();
+            penColorButtons.Add(createColorButton(Brushes.White));
             penColorButtons.Add(createColorButton(Brushes.Red));
             penColorButtons.Add(createColorButton(Brushes.Green));
             penColorButtons.Add(createColorButton(Brushes.Blue));
-            penColorButtons.Add(createColorButton(Brushes.White));
             penColorButtons.ForEach(x => PenColorPanel.Children.Add(x));
             changePenColorButtonState(penColorButtonState);
         }
@@ -367,27 +390,39 @@ namespace ArunaPaintProject
             undoButton.IsEnabled = activeTabItem.ActionCanvas.CanUndo();
             redoButton.IsEnabled = activeTabItem.ActionCanvas.CanRedo();
         }
-        
+
+        private void configureFunctionButtons()
+        {
+            functionButtons = new List<Button>();
+            functionButtons.Add(penSizeButton);
+            functionButtons.Add(penColorButton);
+            functionButtons.Add(actionButton);
+            functionButtons.Add(eraserButton);
+            functionButtons.Add(saveButton);
+            functionButtons.Add(comingSoonButton);
+            functionButtonState = System.Windows.Visibility.Collapsed;
+            changeFunctionButtonState(functionButtonState);
+        }
+
+        void changeFunctionButtonState(System.Windows.Visibility state)
+        {
+            functionButtons.ForEach(x => x.Visibility = state);
+            if (functionButtonState == System.Windows.Visibility.Collapsed)
+            {
+                penSizeButtonState = System.Windows.Visibility.Collapsed;
+                penColorButtonState = System.Windows.Visibility.Collapsed;
+                actionButtonState = System.Windows.Visibility.Collapsed;
+                changePenSizeButtonState(penSizeButtonState);
+                changePenColorButtonState(penColorButtonState);
+                changeActionButtonState(actionButtonState);
+            }
+        }
 
         private void MainButton_Click(object sender, RoutedEventArgs e)
         {
-            if (isShown)
-            {
-                foreach (Button b in functionButtons)
-                {
-                    b.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                isShown = false;
-            }
-            else
-            {
-                foreach (Button b in functionButtons)
-                {
-                    b.Visibility = System.Windows.Visibility.Visible;
-                }
-                isShown = true;
-            }
-            
+            functionButtonState = functionButtonState != System.Windows.Visibility.Collapsed ?
+                System.Windows.Visibility.Collapsed : System.Windows.Visibility.Visible;
+            changeFunctionButtonState(functionButtonState);
         }
 
         public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject

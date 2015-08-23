@@ -175,6 +175,12 @@
     <Resource Include="Images\button-action-undo.png" />
     <Resource Include="Images\button-action.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\button-save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\button-coming-soon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

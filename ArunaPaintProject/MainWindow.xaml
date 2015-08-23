@@ -38,7 +38,7 @@
                 <ColumnDefinition Width="300"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Grid x:Name="ButtonsGrid" Width="1000" Height="Auto" Grid.Row="1">
+            <Grid x:Name="ButtonsGrid" Width="1000" Height="Auto" Grid.Row="1" Margin="20 0 0 0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="50"></RowDefinition>

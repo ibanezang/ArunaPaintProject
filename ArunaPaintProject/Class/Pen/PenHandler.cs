@@ -1,6 +1,7 @@
 ﻿using ArunaPaintProject.UIComponent;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace ArunaPaintProject.Class.Pen
 
 	    public PenHandler(PenHandler next) {
 		    this.next = next;
-            this.penSize = 2;
+            this.penSize = int.Parse(ConfigurationManager.AppSettings["Pen.Size.Default"]);
 	    }
 
 	    public PenHandler GetPen(Brush color) {

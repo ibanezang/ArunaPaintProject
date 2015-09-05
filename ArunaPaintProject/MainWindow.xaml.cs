@@ -1,5 +1,6 @@
 ﻿using ArunaPaintProject.Class.Pen;
 using ArunaPaintProject.UIComponent;
+using ArunaPaintProject.UITemplate;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -97,6 +98,13 @@ namespace ArunaPaintProject
         private void saveButton_Click(object sender, RoutedEventArgs e)
         {
             // do save routine here
+            var saveFileDialog = new SaveFileDialog();
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                //MessageBox.Show(saveFileDialog.SelectedPath);
+                // add some save routine here
+                var path = saveFileDialog.SelectedPath;
+            }
 
         }
 

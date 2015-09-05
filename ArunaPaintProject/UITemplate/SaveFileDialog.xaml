@@ -1,0 +1,38 @@
+﻿<Window x:Class="ArunaPaintProject.UITemplate.SaveFileDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Choose Save File Location" Height="200" Width="400" 
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="125"></ColumnDefinition>
+            <ColumnDefinition Width="200"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label Grid.Column="0" Grid.Row="1" FontSize="15">File Name:</Label>
+        <TextBox x:Name="textBoxFileName" Grid.Column="1" Grid.Row="1"></TextBox>
+        <Label Grid.Column="3" Grid.Row="1" FontSize="15">*</Label>
+        <Label Grid.Column="0" Grid.Row="2" FontSize="15">Folder Location:</Label>
+        <Label x:Name="labelFolderLocation"  Grid.Column="1" Grid.Row="2" FontSize="15">Choose a location</Label>
+        <Button Grid.Column="2" Grid.Row="2" FontSize="15">...</Button>
+        <Button x:Name="buttonBrowse"  Grid.Column="2" Grid.Row="2" FontSize="15" Click="buttonBrowse_Click">...</Button>
+        <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Horizontal">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="buttonOK" FontSize="15" Width="75" Grid.Column="0" Click="buttonOK_Clicked">OK</Button>
+                <Button x:Name="buttonCancel"  FontSize="15" Width="75" Grid.Column="1" Click="buttonCancel_Clicked">Cancel</Button>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>
